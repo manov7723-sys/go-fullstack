@@ -3,18 +3,20 @@
 .env.local
 .env.*.local
 
+# Dependencies
+node_modules/
+vendor/
+
 # Go build output
-library-management-system-backend/main
-library-management-system-backend/main.exe
-library-management-system-backend/tmp/
+main
+main.exe
+tmp/
+*.test
+*.out
+coverage.html
 
 # Frontend build output
-library-management-system-frontend/dist/
-library-management-system-frontend/node_modules/
-
-# Frontend local env overrides
-library-management-system-frontend/.env.local
-library-management-system-frontend/.env.*.local
+dist/
 
 # OS noise
 .DS_Store
@@ -25,11 +27,6 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
-
-# Go test cache / coverage
-*.test
-*.out
-coverage.html
 
 # Docker volumes (if bind-mounted locally)
 postgres-data/
