@@ -31,10 +31,12 @@ import {
   PaginatedResponse,
 } from "../types";
 
-// In Docker, nginx proxies /api/ to the backend container.
-// For local dev (no Docker), requests go directly to the backend on :8080.
+// nginx proxies /api/ to the backend (both in Docker and in Kubernetes).
+// For local dev without a proxy, set VITE_API_URL=http://localhost:8080/api/v1
+// in .env.local — the fallback is a relative path so the deployed bundle
+// calls the same origin the page came from and no dev-machine URL is baked in.
 const API_BASE_URL =
-  import.meta.env.VITE_API_URL ?? "http://localhost:8080/api/v1";
+  import.meta.env.VITE_API_URL ?? "/api/v1";
 
 class ApiService {
   private api: AxiosInstance;
