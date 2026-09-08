@@ -9,6 +9,11 @@ RUN npm run build
 # Stock nginx here would need root for :80 and /var/cache/nginx and exits
 # [emerg] under the manifest's runAsNonRoot + readOnlyRootFilesystem.
 FROM nginxinc/nginx-unprivileged:1.27-alpine
+# The repo's own nginx.conf carries the SPA fallback + /api proxy to the
+# backend Service. Without this COPY the image runs on stock nginx's default
+# config: /api/* returns 404 (no proxy) and every SPA route returns 404
+# (no history fallback) — the app renders but every request fails.
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/dist /usr/share/nginx/html
 # Already the image's default; stated so the manifest's runAsUser has
 # something to agree with and the review rules can see it.
